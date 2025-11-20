@@ -1,0 +1,33 @@
+string happyLadybugs(string b) {
+    int freq[26] = {0};
+    bool hasUnderscore = false;
+
+    // Count frequencies and detect '_'
+    for (char c : b) {
+        if (c == '_') {
+            hasUnderscore = true;
+        } else {
+            freq[c - 'A']++;
+        }
+    }
+
+    // If underscores exist, check if any color occurs only once
+    if (hasUnderscore) {
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] == 1) return "NO";
+        }
+        return "YES";
+    }
+
+    // No underscores => must already be happy
+    int n = b.size();
+    for (int i = 0; i < n; i++) {
+        bool happy = false;
+
+        if (i > 0 && b[i] == b[i - 1]) happy = true;
+        if (i < n - 1 && b[i] == b[i + 1]) happy = true;
+
+        if (!happy) return "NO";
+    }
+
+    return "YES";
